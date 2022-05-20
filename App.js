@@ -3,28 +3,17 @@ import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Movies from './screens/Movies';
+import SingleMovie from './screens/SingleMovie';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Provider } from "react-redux";
+import  store  from "./reducers/store";
 
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
+    <Provider store={store}>
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen options={{
@@ -50,8 +39,9 @@ export default function App() {
             headerStyle: {
               backgroundColor: "#00669a",
             },
-          }} name="Settings" component={SettingsScreen} />
+          }} name="Settings" component={SingleMovie} />
       </Tab.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 }
