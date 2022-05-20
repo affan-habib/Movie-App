@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
+import { View, Text, StyleSheet, FlatList, Image,Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { callApi, selectApi } from "../reducers/apiSlice";
 
-const Movies = () => {
+const Movies = ({ navigation }) => {
 
   const { loading, details = {
     results: {}
@@ -28,13 +28,17 @@ const Movies = () => {
           }}
         />
         <Text
-          style={{ marginTop: 10, color: "red", fontSize: 15 }}
+          style={{ marginTop: 10, color: "#e82f3e", fontSize: 15 }}
           onPress={() => getItem(item)}
         >
           {item.original_title.toUpperCase()}
         </Text>
         <Text>Overall Rating: {item.vote_average}</Text>
         <Text>Year: {item.release_date.slice(0, 4)}</Text>
+        <Button
+        title="Go to Details"
+        onPress={()=>navigation.navigate('SingleMovie',{msg:"From Screen 1"})}
+      />
       </View>
     );
   };
@@ -57,7 +61,7 @@ const Movies = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: '#eff0ed',
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "flex-start",
@@ -72,14 +76,16 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 10,
     border: 1,
-    borderColor: "red",
+    borderColor: "#e82f3e",
   },
   flatlist: {
     marginTop: 20,
     padding: 10,
     border: 1,
-    borderColor: "red",
+    borderColor: "#e82f3e",
   },
 });
+
+
 
 export default Movies;
