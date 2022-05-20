@@ -8,7 +8,6 @@ const Movies = ({ navigation }) => {
   const { loading, details = {
     results: {}
   }} = useSelector(selectApi)
-  console.log(details.results,"ff")
   const dispatch = useDispatch()
 
   useEffect(()=> {
@@ -37,7 +36,7 @@ const Movies = ({ navigation }) => {
         <Text>Year: {item.release_date.slice(0, 4)}</Text>
         <Button
         title="Go to Details"
-        onPress={()=>navigation.navigate('SingleMovie',{msg:"From Screen 1"})}
+        onPress={()=>navigation.navigate('Movie Details',{id:item.id})}
       />
       </View>
     );

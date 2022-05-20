@@ -6,7 +6,7 @@ import { selectApi } from "../reducers/apiSlice";
 const SingleMovie = ({route}) => {
 
   const { details } = useSelector(selectApi)
-  const movie = details.results.find(el=> el.id == '752623' )
+  const movie = details.results.find(el=> el.id == route.params.id )
   console.log(movie)
 
   return (
@@ -21,7 +21,6 @@ const SingleMovie = ({route}) => {
         />
       <Text>{movie.popularity}</Text>
       <Text>{movie.vote_average}</Text>
-      <Text>{route.params.msg}</Text>
       <Text>{movie.release_date}</Text>
     </View>
     </ScrollView>

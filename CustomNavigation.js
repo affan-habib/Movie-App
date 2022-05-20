@@ -17,7 +17,7 @@ const MoviesNavigator = () => {
         component={Movies}
       />
        <Stack.Screen
-        name="SingleMovie"
+        name="Movie Details"
         component={SingleMovie}
       />
     </Stack.Navigator>
