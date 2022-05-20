@@ -1,35 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
+import React, { useEffect } from "react";
+import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
-
-import {
-  callApi,
-  selectApi
-} from '../reducers/apiSlice'
+import { callApi, selectApi } from "../reducers/apiSlice";
 
 const SingleMovie = () => {
 
-  
-  const { loading, details = {
-    data: {}
-  }} = useSelector(selectApi)
-
-  const dispatch = useDispatch()
-
-  useEffect(()=> {
-    dispatch(callApi({
-      // operationId : `users/${match.params.id}`,
-      operationId : '/',
-			output: 'details'
-    }))
-  // }, [dispatch, match.params.id])
-  }, [dispatch])
-
+  const { details } = useSelector(selectApi)
+  const movie = details.results.find(el=> el.id == '752623' )
+  console.log(movie)
 
   return (
-    <View style={{flex:1}}>
-      <Text>Single Movie</Text>
+    <ScrollView style={styles.scrollView}>
+    <View style={{flex:1, padding: 20}}>
+      <Text style={{color: 'orange', fontSize: 30, fontWeight: 'bold', marginBottom: 20}}>{movie.original_title}</Text>
+      <Image
+          style={styles.img}
+          source={{
+            uri: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+          }}
+        />
+      <Text>{movie.popularity}</Text>
+      <Text>{movie.vote_average}</Text>
+      <Text>{movie.original_language}</Text>
+      <Text>{movie.release_date}</Text>
     </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -41,7 +36,7 @@ const styles = StyleSheet.create({
   },
   img: {
     width: "100%",
-    height: 150,
+    height: 500,
   },
   movie: {
     flex: 1,
