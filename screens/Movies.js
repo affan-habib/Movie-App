@@ -1,48 +1,59 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, Image,Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { callApi, selectApi } from "../reducers/apiSlice";
 import { addfavorite } from "../reducers/favoriteSlice";
 
 const Movies = ({ navigation }) => {
+  const {
+    loading,
+    details = {
+      results: {},
+    },
+  } = useSelector(selectApi);
+  const dispatch = useDispatch();
 
-  const { loading, details = {
-    results: {}
-  }} = useSelector(selectApi)
-  const dispatch = useDispatch()
-
-  useEffect(()=> {
-    dispatch(callApi({
-      operationId : '/',
-			output: 'details'
-    }))
-  }, [dispatch])
+  useEffect(() => {
+    dispatch(
+      callApi({
+        operationId: "/",
+        output: "details",
+      })
+    );
+  }, [dispatch]);
   // const allmovies = details.results
   const ItemView = ({ item }) => {
     return (
       <View style={styles.movie}>
-        <Image
-          style={styles.img}
-          source={{
-            uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
-          }}
-        />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Movie Details", { id: item.id })}
+        >
+          <Image
+            style={styles.img}
+            source={{
+              uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+            }}
+          />
+        </TouchableOpacity>
         <Text
-          style={{ marginTop: 10, color: "#e82f3e", fontSize: 15 }}
-          onPress={() => getItem(item)}
+          style={{ marginTop: 10, color: "#0296e5", fontSize: 15 }}
         >
           {item.original_title.toUpperCase()}
         </Text>
         <Text>Overall Rating: {item.vote_average}</Text>
         <Text>Year: {item.release_date.slice(0, 4)}</Text>
         <Button
-        title="Add To favorite"
-        onPress={()=> dispatch(addfavorite(item))}
-      />
-        <Button
-        title="Go to Details"
-        onPress={()=>navigation.navigate('Movie Details',{id:item.id})}
-      />
+          title="Add To favorite"
+          onPress={() => dispatch(addfavorite(item))}
+        />
       </View>
     );
   };
@@ -65,7 +76,7 @@ const Movies = ({ navigation }) => {
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#eff0ed',
+    backgroundColor: "#eff0ed",
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "flex-start",
@@ -89,7 +100,5 @@ const styles = StyleSheet.create({
     borderColor: "#e82f3e",
   },
 });
-
-
 
 export default Movies;

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, Image,FlatList } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image,FlatList, Button } from "react-native";
 import { selectApi } from "../reducers/apiSlice";
 import { useSelector, useDispatch } from "react-redux";
 const Favorites = ({navigation}) => {
@@ -9,20 +9,21 @@ const Favorites = ({navigation}) => {
   const ItemView = ({ item }) => {
     return (
       <View style={styles.movie}>
-        <Image
-          style={styles.img}
-          source={{
-            uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
-          }}
-        />
+       <TouchableOpacity
+          onPress={() => navigation.navigate("Movie Details", { id: item.id })}
+        >
+          <Image
+            style={styles.img}
+            source={{
+              uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+            }}
+          />
+        </TouchableOpacity>
         <Text
-          style={{ marginTop: 10, color: "#e82f3e", fontSize: 15 }}
-          onPress={() => getItem(item)}
+          style={{ marginTop: 10, color: "#0296e5", fontSize: 15 }}
         >
           {item.original_title.toUpperCase()}
         </Text>
-        <Text>Overall Rating: {item.vote_average}</Text>
-        <Text>Year: {item.release_date.slice(0, 4)}</Text>
       </View>
     );
   };
@@ -41,6 +42,7 @@ const Favorites = ({navigation}) => {
           numColumns={2}
         />
       </View>
+      
     </View>
   );
 };
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
   },
   img: {
     width: "100%",
-    height: 500,
+    height: 100,
   },
   movie: {
     flex: 1,
