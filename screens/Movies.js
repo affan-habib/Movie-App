@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -11,7 +11,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { callApi, selectApi } from "../reducers/apiSlice";
 import { addfavorite } from "../reducers/favoriteSlice";
 import Button from "../components/Button";
+
 const Movies = ({ navigation }) => {
+
+  const [page, setPage] = useState(4)
+
   const {
     loading,
     details = {
@@ -25,9 +29,13 @@ const Movies = ({ navigation }) => {
       callApi({
         operationId: "/",
         output: "details",
+        parameters: {
+          page : page
+        }
       })
     );
-  }, [dispatch]);
+  }, [dispatch, page]);
+  
   // const allmovies = details.results
   const ItemView = ({ item }) => {
     return (
@@ -56,6 +64,16 @@ const Movies = ({ navigation }) => {
   };
   return (
     <View style={{ flex: 1 }}>
+      <View style={styles.pagination}>
+        <Button
+            iconName="arrow-back"
+            onPress={() => setPage(page-1)}
+          />
+      <Button
+          iconName="arrow-forward"
+          onPress={() => setPage(page+1)}
+        />
+      </View>
       <Text style={{ textAlign: "center", marginTop: 20, fontSize: 20 }}>
         Best Movie collection
       </Text>
@@ -96,6 +114,12 @@ const styles = StyleSheet.create({
     border: 1,
     borderColor: "#e82f3e",
   },
+  pagination:{
+    flexDirection: 'row',
+    marginHorizontal: 50,
+    alignSelf: 'center',
+    marginTop: 20
+  }
 });
 
 export default Movies;
