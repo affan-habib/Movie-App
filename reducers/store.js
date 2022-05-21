@@ -1,5 +1,6 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import ApiReducer from './apiSlice';
+import favoriteReducer from './favoriteSlice';
 import toastReducer from './toastSlice';
 import createSagaMiddleware from 'redux-saga';
 import sagas from '../sagas';
@@ -14,6 +15,7 @@ const middleware = [
 export default configureStore({
   reducer: {
     api: ApiReducer,
+    favorites: favoriteReducer,
     toast: toastReducer,
   },
   middleware

@@ -1,18 +1,46 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
-import { useSelector, useDispatch } from 'react-redux';
+import { View, Text, StyleSheet, ScrollView, Image,FlatList } from "react-native";
 import { selectApi } from "../reducers/apiSlice";
-
+import { useSelector, useDispatch } from "react-redux";
 const Reviews = ({navigation}) => {
 
-  const { details } = useSelector(selectApi)
-  const movie = details.results.find(el=> el.id == '752623' )
-  console.log(movie)
-
+  const favorites = useSelector((state) => state.favorites);
+  console.log(favorites);
+  const ItemView = ({ item }) => {
+    return (
+      <View style={styles.movie}>
+        <Image
+          style={styles.img}
+          source={{
+            uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+          }}
+        />
+        <Text
+          style={{ marginTop: 10, color: "#e82f3e", fontSize: 15 }}
+          onPress={() => getItem(item)}
+        >
+          {item.original_title.toUpperCase()}
+        </Text>
+        <Text>Overall Rating: {item.vote_average}</Text>
+        <Text>Year: {item.release_date.slice(0, 4)}</Text>
+      </View>
+    );
+  };
   return (
     
-    <View style={{flex:1, padding: 20}}>
-      <Text>{movie.release_date}</Text>
+    <View style={{ flex: 1 }}>
+      <Text style={{ textAlign: "center", marginTop: 20, fontSize: 20 }}>
+        My Favorite Movies
+      </Text>
+      <View style={styles.container}>
+        <FlatList
+          style={styles.flatlist}
+          data={favorites}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={ItemView}
+          numColumns={2}
+        />
+      </View>
     </View>
   );
 };

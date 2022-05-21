@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, Image,Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { callApi, selectApi } from "../reducers/apiSlice";
+import { addfavorite } from "../reducers/favoriteSlice";
 
 const Movies = ({ navigation }) => {
 
@@ -34,6 +35,10 @@ const Movies = ({ navigation }) => {
         </Text>
         <Text>Overall Rating: {item.vote_average}</Text>
         <Text>Year: {item.release_date.slice(0, 4)}</Text>
+        <Button
+        title="Add To favorite"
+        onPress={()=> dispatch(addfavorite(item))}
+      />
         <Button
         title="Go to Details"
         onPress={()=>navigation.navigate('Movie Details',{id:item.id})}
