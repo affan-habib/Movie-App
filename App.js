@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Movies from "./screens/Movies";
-import Reviews from "./screens/Reviews";
+import Favorites from "./screens/Favorites";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Provider } from "react-redux";
 import store from "./reducers/store";
@@ -19,13 +19,7 @@ export default function App() {
           <Tab.Screen
             options={{
               tabBarIcon: () => <Icon name="movie" size={30} color="#e82f3e" />,
-              headerTitleStyle: {
-                fontWeight: "bold",
-                color: "white",
-              },
-              headerStyle: {
-                backgroundColor: "#e82f3e",
-              },
+              headerShown: false
             }}
             name="Home"
             component={MoviesNavigator}
@@ -43,8 +37,8 @@ export default function App() {
                 backgroundColor: "#e82f3e",
               },
             }}
-            name="Reviews"
-            component={Reviews}
+            name="Favorites"
+            component={Favorites}
           />
         </Tab.Navigator>
       </NavigationContainer>

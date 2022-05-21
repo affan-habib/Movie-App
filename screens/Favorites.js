@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Image,FlatList } from "react-native";
 import { selectApi } from "../reducers/apiSlice";
 import { useSelector, useDispatch } from "react-redux";
-const Reviews = ({navigation}) => {
+const Favorites = ({navigation}) => {
 
   const favorites = useSelector((state) => state.favorites);
   console.log(favorites);
@@ -65,4 +65,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Reviews;
+export default Favorites;
