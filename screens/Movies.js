@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
   StyleSheet,
   FlatList,
   Image,
-  Button,
   TouchableOpacity,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { callApi, selectApi } from "../reducers/apiSlice";
 import { addfavorite } from "../reducers/favoriteSlice";
-
+import Button from "../components/Button";
 const Movies = ({ navigation }) => {
   const {
     loading,
@@ -43,15 +42,13 @@ const Movies = ({ navigation }) => {
             }}
           />
         </TouchableOpacity>
-        <Text
-          style={{ marginTop: 10, color: "#0296e5", fontSize: 15 }}
-        >
+        <Text style={{ marginTop: 10, color: "#0296e5", fontSize: 16 }}>
           {item.original_title.toUpperCase()}
         </Text>
         <Text>Overall Rating: {item.vote_average}</Text>
         <Text>Year: {item.release_date.slice(0, 4)}</Text>
         <Button
-          title="Add To favorite"
+          iconName="favorite"
           onPress={() => dispatch(addfavorite(item))}
         />
       </View>
