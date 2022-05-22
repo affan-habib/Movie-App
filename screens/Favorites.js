@@ -1,38 +1,39 @@
-import React, { useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image,FlatList, Button } from "react-native";
-import { selectApi } from "../reducers/apiSlice";
-import { useSelector, useDispatch } from "react-redux";
-const Favorites = ({navigation}) => {
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  FlatList,
+} from "react-native";
+import { useSelector } from "react-redux";
+import globalStyles from "../styles/globalStyle";
 
+const Favorites = ({ navigation }) => {
   const favorites = useSelector((state) => state.favorites);
   console.log(favorites);
   const ItemView = ({ item }) => {
     return (
       <View style={styles.movie}>
-       <TouchableOpacity
-          onPress={() => navigation.navigate("Movie Details", { id: item.id })}
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Movie Details", { item })}
         >
           <Image
-            style={styles.img}
+            style={globalStyles.img}
             source={{
               uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
             }}
           />
         </TouchableOpacity>
-        <Text
-          style={{ marginTop: 10, color: "#0296e5", fontSize: 15 }}
-        >
+        <Text style={globalStyles.headingThree}>
           {item.original_title.toUpperCase()}
         </Text>
       </View>
     );
   };
   return (
-    
     <View style={{ flex: 1 }}>
-      <Text style={{ textAlign: "center", marginTop: 20, fontSize: 20 }}>
-        My Favorite Movies
-      </Text>
       <View style={styles.container}>
         <FlatList
           style={styles.flatlist}
@@ -42,7 +43,6 @@ const Favorites = ({navigation}) => {
           numColumns={2}
         />
       </View>
-      
     </View>
   );
 };
@@ -53,10 +53,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     alignItems: "flex-start",
   },
-  img: {
-    width: "100%",
-    height: 100,
-  },
+
   movie: {
     flex: 1,
     margin: 10,

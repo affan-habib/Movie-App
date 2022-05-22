@@ -1,12 +1,12 @@
-import { Text } from "react-native";
+import React from 'react'
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
 const Button = ({iconName, onPress}) => {
     return(
         <TouchableOpacity onPress={onPress}>
-            <Icon name={iconName} size={30} color="#0276b4" />
+            <Icon name={iconName} size={22} color="white" style={{marginHorizontal: 20}} />
         </TouchableOpacity>
     )
 }
 
-export default Button;
+export default Button

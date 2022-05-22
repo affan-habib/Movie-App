@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Movies from "./screens/Movies";
-import SingleMovie from "./screens/SingleMovie";
+import MovieDetails from "./shared/MovieDetails";
 import Favorites from "./screens/Favorites";
 
 const Stack = createStackNavigator();
@@ -16,7 +16,7 @@ const MoviesNavigator = () => {
             color: "white",
           },
           headerStyle: {
-            backgroundColor: "#e82f3e",
+            backgroundColor: "#0296e5",
           },
         }}
         name="Home"
@@ -29,11 +29,11 @@ const MoviesNavigator = () => {
             color: "white",
           },
           headerStyle: {
-            backgroundColor: "#e82f3e",
+            backgroundColor: "#0296e5",
           },
         }}
         name="Movie Details"
-        component={SingleMovie}
+        component={MovieDetails}
       />
     </Stack.Navigator>
   );
@@ -50,7 +50,7 @@ const FavoritesNavigator = () => {
             color: "white",
           },
           headerStyle: {
-            backgroundColor: "#e82f3e",
+            backgroundColor: "#0296e5",
           },
         }}
         name="Favorites"
@@ -63,20 +63,23 @@ const FavoritesNavigator = () => {
             color: "white",
           },
           headerStyle: {
-            backgroundColor: "#e82f3e",
+            backgroundColor: "#0296e5",
           },
           tabBarOptions: {
-            activeTintColor: 'red',
+            activeTintColor: "red",
             labelStyle: {
               fontSize: 12,
             },
             style: {
-              backgroundColor: 'green',
+              backgroundColor: "green",
             },
-          }
+          },
+          tabBarLabelStyle: {
+            color: "blue",
+          },
         }}
         name="Movie Details"
-        component={SingleMovie}
+        component={MovieDetails}
       />
     </Stack.Navigator>
   );

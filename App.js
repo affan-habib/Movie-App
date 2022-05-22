@@ -16,7 +16,7 @@ export default function App() {
         <Tab.Navigator>
           <Tab.Screen
             options={{
-              tabBarIcon: () => <Icon name="movie" size={30}/>,
+              tabBarIcon: () => <Icon color="#0296e5" name="movie" size={30} />,
               headerShown: false,
             }}
             name="Home"
@@ -25,14 +25,14 @@ export default function App() {
           <Tab.Screen
             options={{
               tabBarIcon: () => (
-                <Icon name="favorite" size={30}/>
+                <Icon name="favorite" color="#0296e5" size={30} />
               ),
               headerTitleStyle: {
                 fontWeight: "bold",
                 color: "white",
               },
               headerStyle: {
-                backgroundColor: "#e82f3e",
+                backgroundColor: "#0296e5",
               },
               headerShown: false,
             }}

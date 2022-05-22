@@ -6,15 +6,17 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { callApi, selectApi } from "../reducers/apiSlice";
 import { addfavorite } from "../reducers/favoriteSlice";
 import Button from "../components/Button";
+import globalStyles from "../styles/globalStyle";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 const Movies = ({ navigation }) => {
-
-  const [page, setPage] = useState(4)
+  const [page, setPage] = useState(4);
 
   const {
     loading,
@@ -23,75 +25,86 @@ const Movies = ({ navigation }) => {
     },
   } = useSelector(selectApi);
   const dispatch = useDispatch();
-
+  console.log(loading);
   useEffect(() => {
     dispatch(
       callApi({
         operationId: "/",
         output: "details",
         parameters: {
-          page : page
-        }
+          page: page,
+        },
       })
     );
   }, [dispatch, page]);
-  
+
   // const allmovies = details.results
   const ItemView = ({ item }) => {
     return (
       <View style={styles.movie}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Movie Details", { id: item.id })}
+          onPress={() => navigation.navigate("Movie Details", { item })}
         >
           <Image
-            style={styles.img}
+            style={globalStyles.img}
             source={{
               uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
             }}
           />
         </TouchableOpacity>
-        <Text style={{ marginTop: 10, color: "#0296e5", fontSize: 16 }}>
+        <View style={{ marginTop: -40, marginLeft: 20, paddingBottom: 30 }}>
+          <Button
+            iconName="favorite"
+            onPress={() => dispatch(addfavorite(item))}
+          />
+        </View>
+        <Text style={globalStyles.headingThree}>
           {item.original_title.toUpperCase()}
         </Text>
-        <Text>Overall Rating: {item.vote_average}</Text>
-        <Text>Year: {item.release_date.slice(0, 4)}</Text>
-        <Button
-          iconName="favorite"
-          onPress={() => dispatch(addfavorite(item))}
-        />
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginTop: 20,
+          }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Icon name="star" size={20} color="#0296e5" />
+            <Text style={globalStyles.headingThree}> {item.vote_average}</Text>
+          </View>
+          <Text style={globalStyles.headingThree}>
+            Year: {item.release_date.slice(0, 4)}
+          </Text>
+        </View>
       </View>
     );
   };
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.pagination}>
-        <Button
-            iconName="arrow-back"
-            onPress={() => setPage(page-1)}
+        <Button iconName="arrow-back" onPress={() => setPage(page - 1)} />
+        <Button iconName="arrow-forward" onPress={() => setPage(page + 1)} />
+      </View>
+      {loading ? (
+        <View style={[styles.containerAc, styles.horizontal]}>
+          <ActivityIndicator size="large" color="#00ff00" />
+        </View>
+      ) : (
+        <View style={styles.container}>
+          <FlatList
+            style={styles.flatlist}
+            data={details.results}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={ItemView}
+            numColumns={2}
           />
-      <Button
-          iconName="arrow-forward"
-          onPress={() => setPage(page+1)}
-        />
-      </View>
-      <Text style={{ textAlign: "center", marginTop: 20, fontSize: 20 }}>
-        Best Movie collection
-      </Text>
-      <View style={styles.container}>
-        <FlatList
-          style={styles.flatlist}
-          data={details.results}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={ItemView}
-          numColumns={2}
-        />
-      </View>
+        </View>
+      )}
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#eff0ed",
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "flex-start",
@@ -106,20 +119,27 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 10,
     border: 1,
-    borderColor: "#e82f3e",
+    borderColor: "#0296e5",
   },
   flatlist: {
-    marginTop: 20,
-    padding: 10,
     border: 1,
-    borderColor: "#e82f3e",
+    borderColor: "#0296e5",
+    marginBottom: 60,
   },
-  pagination:{
-    flexDirection: 'row',
-    marginHorizontal: 50,
-    alignSelf: 'center',
-    marginTop: 20
-  }
+  pagination: {
+    flexDirection: "row",
+    alignSelf: "center",
+    marginTop: 20,
+  },
+  containerAc: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  horizontal: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10,
+  },
 });
 
 export default Movies;
